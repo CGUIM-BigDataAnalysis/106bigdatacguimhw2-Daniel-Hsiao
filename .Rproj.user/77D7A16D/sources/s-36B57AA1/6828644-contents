@@ -1,0 +1,14 @@
+library(ggplot2)
+library(plyr)
+library(maptools)
+
+world_map <-readShapePoly("c:/rstudy/wold_map/World_region.shp")
+x <- world_map@data    #读取行政信息
+
+xs <- data.frame(x,id=seq(0:250)-1)  #含岛屿共251个形状
+
+
+
+world_map1 <- fortify(world_map)       #转化为数据框
+
+world_map_data <- join(world_map1, xs, type = "full")

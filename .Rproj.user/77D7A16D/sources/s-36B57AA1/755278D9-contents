@@ -10,17 +10,10 @@ T_to_W_top10 <-
   TaiwanToWorld105 %>%
   head(10)
 
-install.packages(c("choroplethr",
-                   "choroplethrMaps")) 
+
 
 library(choroplethr)
 library(choroplethrMaps)
-
-data(df_pop_state) #記載各州人口數的資料
-#把各州人口畫在地圖上
-state_choropleth(df_pop_state) 
-
-?choroplethr
 library(rgdal)
 library(ggplot2)
 library(ggmap)

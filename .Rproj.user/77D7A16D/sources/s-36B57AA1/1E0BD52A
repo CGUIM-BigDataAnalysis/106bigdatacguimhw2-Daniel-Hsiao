@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1527605044338.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1E0BD52A",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1527605044338,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "C72CB2",
+        "caption" : "TaiwanToWorld105",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=TaiwanToWorld105&cache_key=C72CB2",
+        "displayedObservations" : "29",
+        "environment" : "",
+        "object" : "TaiwanToWorld105",
+        "preview" : "0",
+        "totalObservations" : "29",
+        "variables" : "3"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

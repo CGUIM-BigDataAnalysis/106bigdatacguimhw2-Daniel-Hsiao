@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1527601272406.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "F13969DC",
+    "lastKnownWriteTime" : 1527516750,
+    "last_content_update" : 1527516750,
+    "path" : "~/GitHub/106bigdatacguimhw2-Daniel-Hsiao/hw2.R",
+    "project_path" : "hw2.R",
+    "properties" : {
+        "cursorPosition" : "125,0",
+        "scrollLine" : "105",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

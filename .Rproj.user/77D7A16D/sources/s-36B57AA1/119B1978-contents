@@ -1,0 +1,5 @@
+library(ggmap)
+twmap <- get_googlemap(center = c(lon=120.58,lat=23.58), 
+                       zoom = 2,
+                       language = "zh-TW")
+ggmap(twmap)

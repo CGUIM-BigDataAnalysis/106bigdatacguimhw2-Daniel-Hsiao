@@ -503,21 +503,113 @@ Student_RPT_07<-
 
 ### 台灣大專院校的學生最喜歡去哪些國家進修交流呢？
 
+透過表格分析，發現最多人去出國進修的國家是中國大陸，接著依照順序是日本、美國、南韓、德國、法國、英國、加拿大、西班牙及香港。
+
 ``` r
-#這是R Code Chunk
+library(readr)
+library(dplyr)
+Student_RPT_07 <- read_csv("C:/Users/Daniel/Downloads/Student_RPT_07.csv")
 ```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   學年度 = col_integer(),
+    ##   學期 = col_integer(),
+    ##   設立別 = col_character(),
+    ##   學校類別 = col_character(),
+    ##   學校代碼 = col_character(),
+    ##   學校名稱 = col_character(),
+    ##   系所代碼 = col_integer(),
+    ##   系所名稱 = col_character(),
+    ##   學制 = col_character(),
+    ##   `對方學校(機構)國別(地區)` = col_character(),
+    ##   對方學校中文名稱 = col_character(),
+    ##   對方學校英文名稱 = col_character(),
+    ##   本國學生出國進修交流人數 = col_integer()
+    ## )
+
+    ## Warning in rbind(names(probs), probs_f): number of columns of result is not
+    ## a multiple of vector length (arg 1)
+
+    ## Warning: 10 parsing failures.
+    ## row # A tibble: 5 x 5 col     row col      expected               actual                     file    expected   <int> <chr>    <chr>                  <chr>                      <chr>   actual 1 23579 系所代碼 no trailing characters A2                         'C:/Us~ file 2 34284 系所代碼 no trailing characters A2                         'C:/Us~ row 3 35022 學年度   an integer             蝯梯?隤芣?嚗?              'C:/Us~ col 4 35023 學年度   no trailing characters ". ?祈”閮剔??乩??\uf2e7\u0080~ 'C:/Us~ expected 5 35024 學年度   no trailing characters ". ?祈”?\uf5fa飛?嗚\u0080\uf~ 'C:/Us~
+    ## ... ................. ... .......................................................................... ........ .......................................................................... ...... ...................................................................... .... ...................................................................... ... .................................................................. ... ....................................................................... ........ .......................................................................
+    ## See problems(...) for more details.
+
+``` r
+Student_RPT_07$學年度<-as.numeric(Student_RPT_07$學年度)
+Student_RPT_07$本國學生出國進修交流人數<-as.numeric(Student_RPT_07$本國學生出國進修交流人數)
+
+Student_RPT_07<-Student_RPT_07[complete.cases(Student_RPT_07),]
+Student_RPT_07<-rename(Student_RPT_07,Country=`對方學校(機構)國別(地區)`)
+
+DifferentCountrySum<-
+  filter(Student_RPT_07,學年度>102)%>%
+  select("學年度","學校名稱",Country,"本國學生出國進修交流人數")%>%
+  group_by(Country)%>%
+  summarise(StuSUM=sum(本國學生出國進修交流人數))%>%
+  arrange(desc(StuSUM))
+
+DifferentCountrySum<-
+  DifferentCountrySum[!grepl("大陸地區",DifferentCountrySum$Country),]%>%
+  head(10)
+  
+library(knitr)
+kable(DifferentCountrySum)
+```
+
+| Country  |  StuSUM|
+|:---------|-------:|
+| 中國大陸 |    8302|
+| 日本     |    7060|
+| 美國     |    4352|
+| 南韓     |    2042|
+| 德國     |    1463|
+| 法國     |    1249|
+| 英國     |     701|
+| 加拿大   |     682|
+| 西班牙   |     637|
+| 香港     |     568|
 
 ### 哪間大學的出國交流學生數最多呢？
 
+最多學生出國交流的大學是國立臺灣大學，然後以下案名次排序是淡江大學、國立政治大學、逢甲大學、元智大學、國立交通大學、東海大學、國立臺北大學、東吳大學，然後是國立成功大學。
+
 ``` r
-#這是R Code Chunk
+DifferentSchoolSum<-
+  filter(Student_RPT_07,學年度>102)%>%
+  select("學年度","學校名稱",Country,"本國學生出國進修交流人數")%>%
+  group_by(學校名稱)%>%
+  summarise(StuSUM=sum(本國學生出國進修交流人數))%>%
+  arrange(desc(StuSUM))%>%
+  head(10)
+
+library(knitr)
+kable(DifferentSchoolSum)
 ```
+
+| 學校名稱     |  StuSUM|
+|:-------------|-------:|
+| 國立臺灣大學 |    2224|
+| 淡江大學     |    2038|
+| 國立政治大學 |    1876|
+| 逢甲大學     |    1346|
+| 元智大學     |    1106|
+| 國立交通大學 |     951|
+| 東海大學     |     931|
+| 國立臺北大學 |     907|
+| 東吳大學     |     873|
+| 國立成功大學 |     846|
 
 ### 台灣大專院校的學生最喜歡去哪些國家進修交流條狀圖
 
 ``` r
-#這是R Code Chunk
+library(ggplot2) 
+
+ggplot()+geom_bar(data=DifferentCountrySum,aes(x=Country,y=StuSUM),stat = "identity")
 ```
+
+![](InternationalStudents_files/figure-markdown_github/FromTWNCountryBar-1.png)
 
 ### 台灣大專院校的學生最喜歡去哪些國家進修交流面量圖
 
@@ -529,14 +621,6 @@ Student_RPT_07<-
 --------------------
 
 ### 資料匯入與處理
-
-``` r
-#這是R Code Chunk
-```
-
-### 台灣學生最喜歡去哪些國家留學呢？
-
-台灣出外留學國家人數排名第一為美國，其次是澳洲，之後順序分別為日本、加拿大、英國、德國、紐西蘭、波蘭、馬來西亞跟奧地利。
 
 ``` r
 library(readr)
@@ -564,7 +648,13 @@ TaiwanToWorld105 <-
 T_to_W_top10 <-
   TaiwanToWorld105 %>%
   head(10)
+```
 
+### 台灣學生最喜歡去哪些國家留學呢？
+
+台灣出外留學國家人數排名第一為美國，其次是澳洲，之後順序分別為日本、加拿大、英國、德國、紐西蘭、波蘭、馬來西亞跟奧地利。
+
+``` r
 library(knitr)
 kable(T_to_W_top10)
 ```
@@ -592,3 +682,5 @@ kable(T_to_W_top10)
 --------
 
 請問來台讀書與離台讀書的來源國與留學國趨勢是否相同(5分)？想來台灣唸書的境外生，他們的母國也有很多台籍生嗎？請圖文並茂說明你的觀察(10分)。
+
+由以上的表格看出來台灣念書的學生大部分來自鄰近的國家，由中國大陸與東南亞占大宗；而台灣學生喜好的留學國家則偏向歐美地區及澳洲等英文語系國家，鄰近的東南亞反而算是少數。 推測是一直以來的政策以及觀念所影響造成這種情況。

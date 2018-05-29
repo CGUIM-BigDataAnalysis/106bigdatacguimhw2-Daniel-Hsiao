@@ -286,18 +286,57 @@ Student_RPT_07<-
 ```
 
 ### 台灣大專院校的學生最喜歡去哪些國家進修交流呢？
+
+透過表格分析，發現最多人去出國進修的國家是中國大陸，接著依照順序是日本、美國、南韓、德國、法國、英國、加拿大、西班牙及香港。
+
 ```{r FromTWNCountry}
-#這是R Code Chunk
+library(readr)
+library(dplyr)
+Student_RPT_07 <- read_csv("C:/Users/Daniel/Downloads/Student_RPT_07.csv")
+
+Student_RPT_07$學年度<-as.numeric(Student_RPT_07$學年度)
+Student_RPT_07$本國學生出國進修交流人數<-as.numeric(Student_RPT_07$本國學生出國進修交流人數)
+
+Student_RPT_07<-Student_RPT_07[complete.cases(Student_RPT_07),]
+Student_RPT_07<-rename(Student_RPT_07,Country=`對方學校(機構)國別(地區)`)
+
+DifferentCountrySum<-
+  filter(Student_RPT_07,學年度>102)%>%
+  select("學年度","學校名稱",Country,"本國學生出國進修交流人數")%>%
+  group_by(Country)%>%
+  summarise(StuSUM=sum(本國學生出國進修交流人數))%>%
+  arrange(desc(StuSUM))
+
+DifferentCountrySum<-
+  DifferentCountrySum[!grepl("大陸地區",DifferentCountrySum$Country),]%>%
+  head(10)
+  
+library(knitr)
+kable(DifferentCountrySum)
 ```
 
 ### 哪間大學的出國交流學生數最多呢？
+
+最多學生出國交流的大學是國立臺灣大學，然後以下案名次排序是淡江大學、國立政治大學、逢甲大學、元智大學、國立交通大學、東海大學、國立臺北大學、東吳大學，然後是國立成功大學。
+
 ```{r FromTWNUniversity}
-#這是R Code Chunk
+DifferentSchoolSum<-
+  filter(Student_RPT_07,學年度>102)%>%
+  select("學年度","學校名稱",Country,"本國學生出國進修交流人數")%>%
+  group_by(學校名稱)%>%
+  summarise(StuSUM=sum(本國學生出國進修交流人數))%>%
+  arrange(desc(StuSUM))%>%
+  head(10)
+
+library(knitr)
+kable(DifferentSchoolSum)
 ```
 
 ### 台灣大專院校的學生最喜歡去哪些國家進修交流條狀圖
 ```{r FromTWNCountryBar}
-#這是R Code Chunk
+library(ggplot2) 
+
+ggplot()+geom_bar(data=DifferentCountrySum,aes(x=Country,y=StuSUM),stat = "identity")
 ```
 
 ### 台灣大專院校的學生最喜歡去哪些國家進修交流面量圖
@@ -309,14 +348,6 @@ Student_RPT_07<-
 
 ### 資料匯入與處理
 ```{r dataloadFromTWNAb}
-#這是R Code Chunk
-```
-
-### 台灣學生最喜歡去哪些國家留學呢？
-
-台灣出外留學國家人數排名第一為美國，其次是澳洲，之後順序分別為日本、加拿大、英國、德國、紐西蘭、波蘭、馬來西亞跟奧地利。
-
-```{r FromTWNAb}
 library(readr)
 
 TaiwanToWorld105 <- read_csv("C:/Users/Daniel/Downloads/105Taiwan to World.csv")
@@ -328,6 +359,14 @@ TaiwanToWorld105 <-
 T_to_W_top10 <-
   TaiwanToWorld105 %>%
   head(10)
+```
+
+### 台灣學生最喜歡去哪些國家留學呢？
+
+台灣出外留學國家人數排名第一為美國，其次是澳洲，之後順序分別為日本、加拿大、英國、德國、紐西蘭、波蘭、馬來西亞跟奧地利。
+
+```{r FromTWNAb}
+
 
 library(knitr)
 kable(T_to_W_top10)
@@ -342,3 +381,7 @@ kable(T_to_W_top10)
 ## 綜合分析
 
 請問來台讀書與離台讀書的來源國與留學國趨勢是否相同(5分)？想來台灣唸書的境外生，他們的母國也有很多台籍生嗎？請圖文並茂說明你的觀察(10分)。
+
+
+由以上的表格看出來台灣念書的學生大部分來自鄰近的國家，由中國大陸與東南亞占大宗；而台灣學生喜好的留學國家則偏向歐美地區及澳洲等英文語系國家，鄰近的東南亞反而算是少數。
+推測是一直以來的政策以及觀念所影響造成這種情況。

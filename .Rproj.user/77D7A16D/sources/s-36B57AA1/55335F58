@@ -5,17 +5,17 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "2851638038",
     "id" : "55335F58",
-    "lastKnownWriteTime" : 1527522828,
-    "last_content_update" : 1527522828792,
+    "lastKnownWriteTime" : 1527608319,
+    "last_content_update" : 1527608319891,
     "path" : "~/GitHub/106bigdatacguimhw2-Daniel-Hsiao/InternationalStudents.Rmd",
     "project_path" : "InternationalStudents.Rmd",
     "properties" : {
-        "cursorPosition" : "287,27",
-        "scrollLine" : "276"
+        "cursorPosition" : "381,0",
+        "scrollLine" : "367"
     },
-    "relative_order" : 3,
+    "relative_order" : 4,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_markdown"
